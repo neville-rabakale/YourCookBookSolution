@@ -1,7 +1,120 @@
 ﻿@page "/AddRecipe/NewRecipe"
 
-<h3>NewRecipe</h3>
+@using Models
+@using Models.Entities
+
+@inject DataService services
+@inject IWebHostEnvironment Environment
+
+<h4>Add new Recipe</h4>
+<div class="col-5">
+    <EditForm Model="@newRecipe" OnValidSubmit="@InsertRecipe">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <div class="mb-3">
+            <label for="ReceipeName">Receipe Name</label>
+            <InputText id="RecipeName" @bind-Value="newRecipe.RecipeName" class="form-control" >@newRecipe.RecipeName</InputText>
+        </div>
+        <div class="mb-3">
+            <label for="Portion">Portion size</label>
+            <InputNumber id="Portion" @bind-Value="newRecipe.PortionSize" class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label for="Cooking">Cooking time</label>
+            <InputNumber id="Cooking" @bind-Value="newRecipe.CookingTime" class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label for="Calories">Calories</label>
+            <InputNumber id="Calories" @bind-Value="newRecipe.TotalCalories" class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label for="Protein">Protein</label>
+            <InputNumber id="Protein" @bind-Value="newRecipe.Protein" class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label for="Carbs">Carbs</label>
+            <InputNumber id="Carbs" @bind-Value="newRecipe.Carbohydrates" class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label for="Fats">Fats</label>
+            <InputNumber id="Fats" @bind-Value="newRecipe.Fats" class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label for="@newRecipe.Method">Method</label>
+            <InputTextArea id="Method" @bind-Value="newRecipe.Method" class="form-control"></InputTextArea>
+        </div>
+        <div class="mb-3">
+            <InputFile class="form-control" OnChange="@OnFileChange" id="Image"/>
+        </div>
+        <div>
+            <label for="@newRecipe.Method">Recipe Type</label>
+            <InputSelect class="form-select" id="FoodType" @bind-Value="newRecipe.RecipeTypeValue">
+                <option Value="1">Breakfast</option>
+                <option Value="2">Lunch</option>
+                <option Value="3">Diner</option>
+                <option Value="4">Drinks</option>
+                <option Value="5">Dessert</option>
+            </InputSelect>
+
+        </div>
+
+
+
+        <button type="submit" class="btn btn-primary">submit</button>
+
+    </EditForm>
+</div>
+
+
+@*<h4>Ingredient</h4>
+<EditForm Model="@ingredients" OnValidSubmit="@InsertRecipe">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <InputText id="ingredientName" @bind-Value="ingredients.IngredientName" />
+    <InputText id="Amount" @bind-Value="ingredients.Amount" />
+
+    <button type="submit" class="btn btn-primary">submit</button>
+
+</EditForm>*@
+
 
 @code {
+    private DisplayRecipeModel newRecipe = new();
+    //private List<IBrowserFile> image = new();
+
+    //private DisplayIngredientModel ingredients = new();
+
+    private async Task InsertRecipe()
+    {
+        await services.AddRecipeAsync(newRecipe);
+
+        //await services.AddIngredientsAsync(ingredients, newRecipe);
+
+        newRecipe = new();
+       // image = new();
+    }
+
+    async Task OnFileChange(InputFileChangeEventArgs e)
+    {
+        //var format = "image/png";
+        //var resizeImage = await e.File.RequestImageFileAsync(format, 300, 300);
+        //var buffer = new byte[resizeImage.Size];
+        //image.Add(e.File);
+        try
+        {
+
+            newRecipe.ImageUrl = e.File;
+            var path = Path.Combine(Environment.WebRootPath, @"images\recipes", e.File.Name );
+            await using FileStream fs = new(path, FileMode.Create);     
+            await e.File.OpenReadStream().CopyToAsync(fs);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+
+    }        
+
 
 }

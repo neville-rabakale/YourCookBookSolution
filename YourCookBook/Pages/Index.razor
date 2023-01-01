@@ -1,9 +1,65 @@
 ﻿@page "/"
 
+@using Models
+@using Models.Entities
+
+@inject DataService services
+
 <PageTitle>Index</PageTitle>
+<h4> Recepies</h4>
 
-<h1>Hello, world!</h1>
+@if (recipes is null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="pt-4">
+        <div class="row pt-2">
+            @foreach (var item in recipes)
+            {
+                <div class="col-lg-3 col-md-6">
+                    <div class="row p-1">
+                        <div class="col p1">
+                            <div class="card-deck">
+                                @if (item.ImageUrl != null)
+                                {
+                                    <img class="card-img-top rounded" src="@item.ImageUrl" alt="Card image cap">
+                                }
+                                else
+                                {
+                                    <img class="card-img-top" src="images\recipes\mammaMu.jpg" alt="Card image cap">
+                                }
+                                <div class="card-body p-2">
+                                    <h5 class="card-title">Receipe Name: @item.RecipeName</h5>
+                                    <h6 class="card-title">Cooking Time: @item.CookingTime Min</h6>
+                                    <h6 class="card-title">Food Type: @item.RecipeType</h6>
+                                    @if(item.TotalCalories == null)
+                                    {
+                                        <h6 class="card-title">Total calories: 0</h6>
+                                    }else
+                                    {
+                                        <h6 class="card-title">Total calories: @item.TotalCalories</h6>
+                                    }
+                                </div>
+                            </div>
 
-Welcome to your new app.
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+    </div>
+
+}
+
+@code {
+    private DisplayIndexModel[] recipes;
+     protected override async Task OnInitializedAsync()
+    {
+        recipes = await services.GetAllRecipesAsync();
+        var dropdown = services.GetType();
+    }
+
+}

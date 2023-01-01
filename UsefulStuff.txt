@@ -1,0 +1,14 @@
+
+  "ConnectionStrings": {
+    "DefaultConnection": "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=CookBookDb;Integrated Security=True;Connect Timeout=60;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"
+  },
+
+  Scaffold
+  Scaffold-DbContext -Connection name=DefaultConnection -Provider Microsoft.EntityFrameworkCore.SqlServer -Project "YourCookBook" -OutputDir "Models/Entities" -Context "CookBookContext" -NoOnConfiguring -Force
+
+  insert into Recipe([RecipeName], [RecipeType], [Method], [PortionSize], [CookingTime])
+values 
+	('Burger', 1, 'cook the food and enjoy', 2, 30),
+	('Chicken', 1, 'This is for the gains, boil and enjoy', 1, 60),
+	('Ice Cream', 1, 'You know what you need to do for this :)', 3, 10)
+go
