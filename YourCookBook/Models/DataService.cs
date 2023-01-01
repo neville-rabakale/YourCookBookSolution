@@ -86,7 +86,6 @@ namespace YourCookBook.Models
         public async Task AddRecipeAsync(DisplayRecipeModel recipeModel)
         {
 
-//            UploadImageAsync(recipeModel);
             var imagepath = @"images\recipes\" + recipeModel.ImageUrl.Name;
 
             await context.Recipes.AddAsync(new Recipe
