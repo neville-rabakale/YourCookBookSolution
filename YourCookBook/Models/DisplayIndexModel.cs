@@ -14,6 +14,13 @@ namespace YourCookBook.Models
         public string RecipeType { get; set; }
 
         public string? ImageUrl { get; set; }
+        public string Url
+        {
+            get
+            {
+                return "Details/" + this.Id;
+            }
+        }
 
     }
 }

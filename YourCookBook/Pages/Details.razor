@@ -1,0 +1,53 @@
+﻿@page "/Details/{Id:int}"
+@using Models
+@using Models.Entities
+
+@inject DataService services
+@inject NavigationManager NavigationManager
+
+
+<h3>Details</h3>
+
+@if (newDetail == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{ 
+    <div>
+        Here the recipe Name: @newDetail.RecipeName, and id: @Id
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="card">
+                @if (newDetail.ImageUrl != null)
+                {
+                    <img class="card-img-top" src="../@newDetail.ImageUrl" alt="Card image cap">
+                }
+                else
+                {
+                    <img class="card-img-top" src="../images/recipes/mammaMu.jpg" alt="Card image cap">
+                }
+                <div class="card-body">
+                <h4 class="card-title">Recipe Name: @newDetail.RecipeName</h4>
+                <h6 class="card-title">Food Type: @newDetail.RecipeType</h6>
+                <p class="card-title">Method: @newDetail.Method</p>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    DisplayDetailsModel newDetail;
+
+    protected override async Task OnInitializedAsync()
+    {
+        newDetail = await services.GetRecipeDetailsAsync(this.Id);
+    }
+   
+}

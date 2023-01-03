@@ -4,6 +4,7 @@
 @using Models.Entities
 
 @inject DataService services
+@inject NavigationManager NavigationManager
 
 <PageTitle>Index</PageTitle>
 <h4> Recepies</h4>
@@ -41,6 +42,8 @@ else
                                     {
                                         <h6 class="card-title">Total calories: @item.TotalCalories</h6>
                                     }
+                                    <NavLink href="@item.Url" class="btn btn-primary">Details</NavLink>
+
                                 </div>
                             </div>
 
@@ -49,17 +52,17 @@ else
                 </div>
             }
         </div>
-
     </div>
 
 }
 
 @code {
     private DisplayIndexModel[] recipes;
-     protected override async Task OnInitializedAsync()
+
+    protected override async Task OnInitializedAsync()
     {
         recipes = await services.GetAllRecipesAsync();
-        var dropdown = services.GetType();
     }
+
 
 }

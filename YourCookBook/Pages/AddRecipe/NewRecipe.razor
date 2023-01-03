@@ -51,7 +51,7 @@
             <InputSelect class="form-select" id="FoodType" @bind-Value="newRecipe.RecipeTypeValue">
                 <option Value="1">Breakfast</option>
                 <option Value="2">Lunch</option>
-                <option Value="3">Diner</option>
+                <option Value="3">Dinner</option>
                 <option Value="4">Drinks</option>
                 <option Value="5">Dessert</option>
             </InputSelect>
@@ -81,7 +81,6 @@
 
 @code {
     private DisplayRecipeModel newRecipe = new();
-    //private List<IBrowserFile> image = new();
 
     //private DisplayIngredientModel ingredients = new();
 
@@ -92,7 +91,6 @@
         //await services.AddIngredientsAsync(ingredients, newRecipe);
 
         newRecipe = new();
-       // image = new();
     }
 
     async Task OnFileChange(InputFileChangeEventArgs e)
@@ -103,7 +101,6 @@
         //image.Add(e.File);
         try
         {
-
             newRecipe.ImageUrl = e.File;
             var path = Path.Combine(Environment.WebRootPath, @"images\recipes", e.File.Name );
             await using FileStream fs = new(path, FileMode.Create);     
@@ -111,9 +108,8 @@
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex.Message);
+            throw new Exception(ex.Message);
         }
-
     }        
 
 

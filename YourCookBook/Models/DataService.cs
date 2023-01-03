@@ -57,9 +57,11 @@ namespace YourCookBook.Models
 
         public async Task<DisplayDetailsModel> GetRecipeDetailsAsync(int id)
         {
-            return await context.Recipes
+
+            var newDetail = await context.Recipes.Where(o => o.Id == id)
                 .Select(o => new DisplayDetailsModel
                 {
+                    //Id = o.Id,
                     RecipeName = o.RecipeName,
                     RecipeType = GetRecipeText(o.RecipeType),
                     Method = o.Method,
@@ -71,6 +73,8 @@ namespace YourCookBook.Models
                     Fats = o.Fats,
                     ImageUrl = o.ImageUrl
                 }).SingleAsync();
+
+            return newDetail;
         }
         public async Task AddIngredientsAsync(DisplayIngredientModel model, DisplayRecipeModel recipeModel)
         {
@@ -105,9 +109,6 @@ namespace YourCookBook.Models
             await context.SaveChangesAsync();
 
         }
-
-
-
 
     }
 }
