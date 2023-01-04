@@ -6,89 +6,148 @@
 @inject DataService services
 @inject IWebHostEnvironment Environment
 
-<h4>Add new Recipe</h4>
-<div class="col-5">
-    <EditForm Model="@newRecipe" OnValidSubmit="@InsertRecipe">
-        <DataAnnotationsValidator />
-        <ValidationSummary />
-        <div class="mb-3">
-            <label for="ReceipeName">Receipe Name</label>
-            <InputText id="RecipeName" @bind-Value="newRecipe.RecipeName" class="form-control" >@newRecipe.RecipeName</InputText>
-        </div>
-        <div class="mb-3">
-            <label for="Portion">Portion size</label>
-            <InputNumber id="Portion" @bind-Value="newRecipe.PortionSize" class="form-control" />
-        </div>
-        <div class="mb-3">
-            <label for="Cooking">Cooking time</label>
-            <InputNumber id="Cooking" @bind-Value="newRecipe.CookingTime" class="form-control" />
-        </div>
-        <div class="mb-3">
-            <label for="Calories">Calories</label>
-            <InputNumber id="Calories" @bind-Value="newRecipe.TotalCalories" class="form-control" />
-        </div>
-        <div class="mb-3">
-            <label for="Protein">Protein</label>
-            <InputNumber id="Protein" @bind-Value="newRecipe.Protein" class="form-control" />
-        </div>
-        <div class="mb-3">
-            <label for="Carbs">Carbs</label>
-            <InputNumber id="Carbs" @bind-Value="newRecipe.Carbohydrates" class="form-control" />
-        </div>
-        <div class="mb-3">
-            <label for="Fats">Fats</label>
-            <InputNumber id="Fats" @bind-Value="newRecipe.Fats" class="form-control" />
-        </div>
-        <div class="mb-3">
-            <label for="@newRecipe.Method">Method</label>
-            <InputTextArea id="Method" @bind-Value="newRecipe.Method" class="form-control"></InputTextArea>
-        </div>
-        <div class="mb-3">
-            <InputFile class="form-control" OnChange="@OnFileChange" id="Image"/>
-        </div>
-        <div>
-            <label for="@newRecipe.Method">Recipe Type</label>
-            <InputSelect class="form-select" id="FoodType" @bind-Value="newRecipe.RecipeTypeValue">
-                <option Value="1">Breakfast</option>
-                <option Value="2">Lunch</option>
-                <option Value="3">Dinner</option>
-                <option Value="4">Drinks</option>
-                <option Value="5">Dessert</option>
-            </InputSelect>
 
+<div class="container">
+
+    @*<h4>Add new Recipe</h4>
+    *@    
+    <div class="row">
+        <h4>Ingredients</h4>
+            <EditForm Model="@newIngredient" OnValidSubmit="@AddIngredient">
+                <DataAnnotationsValidator />
+                <ValidationSummary />
+                <div>
+
+                <div class="mb-3 col-6 ">
+                    <label for="ingredientName"> Ingredient </label>
+                    <InputText id="ingredientName" @bind-Value="newIngredient.IngredientName" class="form-control" />
+                </div>
+                <div class="mb-3 col-6">
+                    <label for="Amount"> Amount </label>
+                    <InputText id="Amount" @bind-Value="newIngredient.Amount" class="form-control" />
+                </div>
+                </div>
+                <button type="submit" class="btn btn-primary col-12">Add Ingredient</button>
+            </EditForm>
+     </div>
+
+        <div class="mb-3">
+        @if (ingredientsList == null)
+            {
+                <p><em>Loading...</em></p>
+            }
+            else
+            {
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Ingredient</th>
+                            <th>Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var item in ingredientsList)
+                        {
+                            <tr>
+                                <td>@item.IngredientName</td>
+                                <td>@item.Amount</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
         </div>
 
+    <div class="row mb-3">
+        <EditForm Model="@newRecipe" OnValidSubmit="@InsertRecipe">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+            <div class="col-5 mb-3">
+                <div class="mb-3">
+                    <label for="ReceipeName">Receipe Name</label>
+                    <InputText id="RecipeName" @bind-Value="newRecipe.RecipeName" class="form-control" >@newRecipe.RecipeName</InputText>
+                </div>
+                <div class="mb-3">
+                    <label for="Portion">Portion size</label>
+                    <InputNumber id="Portion" @bind-Value="newRecipe.PortionSize" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label for="Cooking">Cooking time</label>
+                    <InputNumber id="Cooking" @bind-Value="newRecipe.CookingTime" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label for="Calories">Calories</label>
+                    <InputNumber id="Calories" @bind-Value="newRecipe.TotalCalories" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label for="Protein">Protein</label>
+                    <InputNumber id="Protein" @bind-Value="newRecipe.Protein" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label for="Carbs">Carbs</label>
+                    <InputNumber id="Carbs" @bind-Value="newRecipe.Carbohydrates" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label for="Fats">Fats</label>
+                    <InputNumber id="Fats" @bind-Value="newRecipe.Fats" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label for="@newRecipe.Method">Method</label>
+                    <InputTextArea id="Method" @bind-Value="newRecipe.Method" class="form-control"></InputTextArea>
+                </div>
+                <div class="mb-3">
+                    <InputFile class="form-control" OnChange="@OnFileChange" id="Image"/>
+                </div>
+                <div>
+                    <label for="@newRecipe.Method">Recipe Type</label>
+                    <InputSelect class="form-select" id="FoodType" @bind-Value="newRecipe.RecipeTypeValue">
+                        <option Value="1">Breakfast</option>
+                        <option Value="2">Lunch</option>
+                        <option Value="3">Dinner</option>
+                        <option Value="4">Drinks</option>
+                        <option Value="5">Dessert</option>
+                    </InputSelect>
+                    <br />
+                </div>
+         
+            </div>
+            <button type="submit" class="btn btn-primary col-12 mb-3">submit</button>
 
-
-        <button type="submit" class="btn btn-primary">submit</button>
-
-    </EditForm>
+        </EditForm>
+    </div>
 </div>
 
 
-@*<h4>Ingredient</h4>
-<EditForm Model="@ingredients" OnValidSubmit="@InsertRecipe">
-    <DataAnnotationsValidator />
-    <ValidationSummary />
 
-    <InputText id="ingredientName" @bind-Value="ingredients.IngredientName" />
-    <InputText id="Amount" @bind-Value="ingredients.Amount" />
-
-    <button type="submit" class="btn btn-primary">submit</button>
-
-</EditForm>*@
 
 
 @code {
+    //private Ingredient[] ingredients;
+    private DisplayIngredientModel newIngredient = new();
+    private List<DisplayIngredientModel> ingredientsList = new();
+
     private DisplayRecipeModel newRecipe = new();
 
-    //private DisplayIngredientModel ingredients = new();
+
+    private async Task AddIngredient()
+    {
+        //Add ingredient to the list of ingredients
+        //the list should not be saved to db, but to a list
+        //list will be read from the same list -- from here or services
+        ingredientsList.Add(newIngredient);
+
+        //ingredients = await services.GetIngredientsAsync(newRecipe.Id); //--use in detail -- 
+        newIngredient = new();
+    }
 
     private async Task InsertRecipe()
     {
-        await services.AddRecipeAsync(newRecipe);
-
-        //await services.AddIngredientsAsync(ingredients, newRecipe);
+        //Once user is ready to save recepe, it is then that the list gets saved to db
+        //Add list of ingredients to newRecipe
+        await services.AddRecipeAsync(newRecipe, ingredientsList);
+        // we need to get recipe id from db before saving list of ingredients to db : 
+        //await services.AddIngredientsAsync(ingredientsList, newRecipe.Id);
+        ingredientsList.Clear();
 
         newRecipe = new();
     }
@@ -99,6 +158,7 @@
         //var resizeImage = await e.File.RequestImageFileAsync(format, 300, 300);
         //var buffer = new byte[resizeImage.Size];
         //image.Add(e.File);
+
         try
         {
             newRecipe.ImageUrl = e.File;

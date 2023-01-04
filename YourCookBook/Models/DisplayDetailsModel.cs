@@ -7,8 +7,7 @@ namespace YourCookBook.Models
     public class DisplayDetailsModel
     {
 
-       // public int Id { get; set; }
-        [Display(Name = "Recipe Name")]
+       [Display(Name = "Recipe Name")]
         public string RecipeName { get; set; } = null!;
         public string RecipeType { get; set; }
 

@@ -32,15 +32,14 @@ else
                                     <img class="card-img-top" src="images\recipes\mammaMu.jpg" alt="Card image cap">
                                 }
                                 <div class="card-body p-2">
-                                    <h5 class="card-title">Receipe Name: @item.RecipeName</h5>
+                                    <h5 class="card-title"> @item.RecipeName</h5>
                                     <h6 class="card-title">Cooking Time: @item.CookingTime Min</h6>
-                                    <h6 class="card-title">Food Type: @item.RecipeType</h6>
                                     @if(item.TotalCalories == null)
                                     {
-                                        <h6 class="card-title">Total calories: 0</h6>
+                                        <h6 class="card-title">Kcal: 0</h6>
                                     }else
                                     {
-                                        <h6 class="card-title">Total calories: @item.TotalCalories</h6>
+                                        <h6 class="card-title">Kcal: @item.TotalCalories</h6>
                                     }
                                     <NavLink href="@item.Url" class="btn btn-primary">Details</NavLink>
 
