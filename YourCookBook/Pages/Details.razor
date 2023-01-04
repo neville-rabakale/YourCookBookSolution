@@ -35,16 +35,46 @@ else
         </div>
     </div>
 }
+<div class="mb-3">
+    @if (ingredients == null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else
+    {
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Ingredient</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in ingredients)
+                {
+                    <tr>
+                        <td>@item.IngredientName</td>
+                        <td>@item.Amount</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>
 
 @code {
     [Parameter]
     public int Id { get; set; }
 
     DisplayDetailsModel newDetail;
+    private Ingredient[] ingredients;
+
 
     protected override async Task OnInitializedAsync()
     {
         newDetail = await services.GetRecipeDetailsAsync(this.Id);
+        ingredients = await services.GetIngredientsAsync(this.Id); //--use in detail --
+
     }
    
 }

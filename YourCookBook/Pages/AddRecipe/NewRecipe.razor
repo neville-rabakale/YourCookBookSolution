@@ -122,7 +122,6 @@
 
 
 @code {
-    //private Ingredient[] ingredients;
     private DisplayIngredientModel newIngredient = new();
     private List<DisplayIngredientModel> ingredientsList = new();
 
@@ -131,22 +130,13 @@
 
     private async Task AddIngredient()
     {
-        //Add ingredient to the list of ingredients
-        //the list should not be saved to db, but to a list
-        //list will be read from the same list -- from here or services
         ingredientsList.Add(newIngredient);
-
-        //ingredients = await services.GetIngredientsAsync(newRecipe.Id); //--use in detail -- 
         newIngredient = new();
     }
 
     private async Task InsertRecipe()
     {
-        //Once user is ready to save recepe, it is then that the list gets saved to db
-        //Add list of ingredients to newRecipe
         await services.AddRecipeAsync(newRecipe, ingredientsList);
-        // we need to get recipe id from db before saving list of ingredients to db : 
-        //await services.AddIngredientsAsync(ingredientsList, newRecipe.Id);
         ingredientsList.Clear();
 
         newRecipe = new();
