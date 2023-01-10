@@ -8,24 +8,11 @@ namespace YourCookBook.Models
     public class DataService
     {
         private readonly CookBookContext context;
-        private readonly IWebHostEnvironment environment;
 
-        public DataService(CookBookContext context, IWebHostEnvironment environment)
+        public DataService(CookBookContext context)
         {
             this.context = context;
-            this.environment = environment;
         }
-
-        //public async Task UploadImageAsync(DisplayRecipeModel model)
-        //{
-        //    // string fileName = Guid.NewGuid().ToString(); //to get a new unique file name
-        //    var filePath = Path.Combine(environment.WebRootPath, @"images\recipes", model.ImageUrl.FileName);
-
-        //    using var fileStream = new FileStream(filePath, FileMode.Create);
-        //    await model.ImageUrl.CopyToAsync(fileStream);
-
-        //}
-
 
         public static string GetRecipeText(int value)
         {
@@ -76,10 +63,6 @@ namespace YourCookBook.Models
             return newDetail;
         }
 
-        //public Recipe GetRecipe(int id)
-        //{
-            
-        //}
         public async Task AddIngredientsAsync(List<DisplayIngredientModel> model, int recipeId)
         {
 
