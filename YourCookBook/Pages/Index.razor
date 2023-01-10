@@ -4,10 +4,13 @@
 @using Models.Entities
 
 @inject DataService services
-@inject NavigationManager NavigationManager
+
 
 <PageTitle>Index</PageTitle>
-<h4> Recepies</h4>
+
+<div class="row no-gutters" style="background-color:cornsilk">
+    <h1> Your Recepies</h1>
+</div>
 
 @if (recipes is null)
 {
@@ -19,17 +22,17 @@ else
         <div class="row pt-2">
             @foreach (var item in recipes)
             {
-                <div class="col-lg-3 col-md-6">
-                    <div class="row p-1">
+                <div class="card-columns col-lg-3 col-md-6">
+                    <div class="row p-2">
                         <div class="col p1">
-                            <div class="card-deck">
+                            <div class="card">
                                 @if (item.ImageUrl != null)
                                 {
                                     <img class="card-img-top rounded" src="@item.ImageUrl" alt="Card image cap">
                                 }
                                 else
                                 {
-                                    <img class="card-img-top" src="images\recipes\mammaMu.jpg" alt="Card image cap">
+                                    <img class="card-img-top rounded" src="images\recipes\mammaMu.jpg" alt="Card image cap">
                                 }
                                 <div class="card-body p-2">
                                     <h5 class="card-title"> @item.RecipeName</h5>
@@ -41,8 +44,7 @@ else
                                     {
                                         <h6 class="card-title">Kcal: @item.TotalCalories</h6>
                                     }
-                                    <NavLink href="@item.Url" class="btn btn-primary">Details</NavLink>
-
+                                    <a href="@item.Url" class="stretched-link"></a>
                                 </div>
                             </div>
 
@@ -58,10 +60,12 @@ else
 @code {
     private DisplayIndexModel[] recipes;
 
+
     protected override async Task OnInitializedAsync()
     {
         recipes = await services.GetAllRecipesAsync();
     }
 
 
+   
 }

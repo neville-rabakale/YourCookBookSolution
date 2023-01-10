@@ -6,8 +6,6 @@
 @inject NavigationManager NavigationManager
 
 
-<h3>Details</h3>
-
 @if (newDetail == null)
 {
     <p><em>Loading...</em></p>
@@ -15,51 +13,69 @@
 else
 { 
 
-    <div class="container">
-        <div class="row">
-            <div class="card">
-                @if (newDetail.ImageUrl != null)
-                {
-                    <img class="card-img-top" src="../@newDetail.ImageUrl" alt="Card image cap">
-                }
-                else
-                {
-                    <img class="card-img-top" src="../images/recipes/mammaMu.jpg" alt="Card image cap">
-                }
-                <div class="card-body">
-                <h4 class="card-title">@newDetail.RecipeName</h4>
-                <h6 class="card-title">Food Type: @newDetail.RecipeType</h6>
-                <p class="card-title">Method: @newDetail.Method</p>
-                </div>
-            </div>
+<div class="row no-gutters" style="background-color:cornsilk">
+    <h1> @newDetail.RecipeName</h1>
+</div>
+
+<div class="container p-3">
+
+      <div class="card mb-3">
+      <div class="row g-0">
+        <div class="col-md-4">
+            @if (newDetail.ImageUrl != null)
+            {
+                <img class="card-img-top" src="../@newDetail.ImageUrl" alt="Card image cap">
+            }
+            else
+            {
+                <img class="card-img-top" src="../images/recipes/mammaMu.jpg" alt="Card image cap">
+            }   
         </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <h5 class="card-title"> Portion size: @newDetail.PortionSize</h5>
+            <h5 class="card-title"> Cooking time: @newDetail.CookingTime min</h5>        
+            <h5 class="card-title"> Total Calories: @newDetail.TotalCalories</h5>        
+            <h5 class="card-title"> Protein: @newDetail.Protein</h5>
+            <h5 class="card-title"> Carbohydrates: @newDetail.Carbohydrates</h5>
+            <h5 class="card-title"> Fats: @newDetail.Fats</h5>        
+          </div>
+        </div>
+      </div>
     </div>
+</div>
+
 }
-<div class="mb-3">
-    @if (ingredients == null)
-    {
-        <p><em>Loading...</em></p>
-    }
-    else
-    {
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Ingredient</th>
-                    <th>Amount</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in ingredients)
-                {
+
+    <div class=" container mb-3">
+        @if (ingredients == null)
+        {
+            <p><em>Loading...</em></p>
+        }
+        else
+        {
+            <table class="table table-striped">
+                <thead>
                     <tr>
-                        <td>@item.IngredientName</td>
-                        <td>@item.Amount</td>
+                        <th>Ingredient</th>
+                        <th>Amount</th>
                     </tr>
-                }
-            </tbody>
-        </table>
-    }
+                </thead>
+                <tbody>
+                    @foreach (var item in ingredients)
+                    {
+                        <tr>
+                            <td>@item.IngredientName</td>
+                            <td>@item.Amount</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+
+<div class="container">
+
 </div>
 
 @code {
